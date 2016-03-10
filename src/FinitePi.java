@@ -87,8 +87,8 @@ public class FinitePi {
                             int atan5Percent = (int) ((atan5.getCurrentSpot() / iterationsAtan5) * 100);
                             int atan239Percent = (int) ((atan239.getCurrentSpot() / iterationsAtan239) * 100);
 
-                            atan5Bar.setValue(Math.min(100, atan5Percent));
-                            atan239Bar.setValue(Math.min(100, atan239Percent));
+                            atan5Bar.setValue(atan5 == null ? Math.min(100, atan5Percent) : 100);
+                            atan239Bar.setValue(atan239 == null ? Math.min(100, atan239Percent) : 100);
 
                             try {
                                 Thread.sleep(100l);
