@@ -56,7 +56,7 @@ public class ATanWorker {
             return spot;
       }
 
-      private BigDecimal getCurrentTerm() {
-            return term;
+      public BigDecimal getCurrentResult() {
+            return result;
       }
 }

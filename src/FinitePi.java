@@ -34,6 +34,7 @@ public class FinitePi {
 
             JTextField numDecimal = new JTextField("50000");
             numDecimal.setColumns(9);
+            numDecimal.setFont(frame.getFont());
 
             JButton find = new JButton("Find Pi");
             find.setFont(frame.getFont());
@@ -115,8 +116,8 @@ public class FinitePi {
             panel.add(progressBarPanel);
 
             JPanel numDecimalPlacePanel = new JPanel();
-            numDecimalPlacePanel.setLayout(new GridLayout(2, 0));
-            numDecimalPlacePanel.add(new JLabel("Decimal Places", SwingConstants.CENTER));
+            numDecimalPlacePanel.setLayout(new GridLayout());
+            numDecimalPlacePanel.add(new JLabel("Number of Decimal Places", SwingConstants.CENTER));
             numDecimalPlacePanel.add(numDecimal);
 
             panel.add(numDecimalPlacePanel);
