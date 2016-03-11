@@ -3,5 +3,5 @@
  */
 public interface Callback<T> {
 
-    public void call(T t);
+      void call(T t);
 }
