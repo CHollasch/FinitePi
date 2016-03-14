@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
  */
 public class ATanWorker {
 
-      public static ExecutorService executor = Executors.newCachedThreadPool();
+      public static ExecutorService executor = Executors.newFixedThreadPool(10);
       private static final int rounding = BigDecimal.ROUND_HALF_EVEN;
 
       private int decimalPlaces;
@@ -28,17 +28,15 @@ public class ATanWorker {
 
             Callable<Void> worker = () -> {
                   do {
-                        synchronized (this.numerator) {
-                              this.numerator = numerator.divide(initialSquared, this.decimalPlaces, rounding);
-                              int denominator = 2 * spot + 1;
+                        this.numerator = numerator.divide(initialSquared, this.decimalPlaces, rounding);
+                        int denominator = 2 * spot + 1;
 
-                              this.term = this.numerator.divide(BigDecimal.valueOf(denominator), this.decimalPlaces, rounding);
+                        this.term = this.numerator.divide(BigDecimal.valueOf(denominator), this.decimalPlaces, rounding);
 
-                              if (spot++ % 2 != 0) {
-                                    this.result = result.subtract(this.term);
-                              } else {
-                                    this.result = result.add(this.term);
-                              }
+                        if (spot++ % 2 != 0) {
+                              this.result = result.subtract(this.term);
+                        } else {
+                              this.result = result.add(this.term);
                         }
                   } while (term.compareTo(BigDecimal.ZERO) != 0);
 

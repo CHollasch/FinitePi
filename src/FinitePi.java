@@ -17,11 +17,15 @@ public class FinitePi {
       private static final BigDecimal FOUR = new BigDecimal("4");
 
       private static long time;
-      private static BigDecimal atan5;
+
       private static BigDecimal atan239;
+      private static BigDecimal atan1023;
+      private static BigDecimal atan5832;
+      private static BigDecimal atan110443;
+      private static BigDecimal atan4841182;
+      private static BigDecimal atan6826318;
 
       private static JProgressBar progressBar;
-
       private static TextAreaOutput output;
 
       public static void main(String[] args)
@@ -53,41 +57,72 @@ public class FinitePi {
                   progressBar.setValue(0);
                   output.clear();
 
-                  atan5 = null;
                   atan239 = null;
+                  atan1023 = null;
+                  atan5832 = null;
+                  atan110443 = null;
+                  atan4841182 = null;
+                  atan6826318 = null;
 
                   time = System.currentTimeMillis();
                   System.out.println("Starting arc tangent workers.");
 
-                  System.out.println("  >> Atan(5) starting <<");
-                  ATanWorker atan5 = new ATanWorker(5, DECIMAL_PLACES, bigDecimal -> {
-                        System.out.println("  !! Found Atan(5), checking if Atan(239) is done too. !!");
-                        FinitePi.atan5 = bigDecimal;
-                        check(pi);
-                  });
-
                   System.out.println("  >> Atan(239) starting <<");
                   ATanWorker atan239 = new ATanWorker(239, DECIMAL_PLACES, bigDecimal -> {
-                        System.out.println("  !! Found Atan(239), checking if Atan(5) is done too. !!");
+                        System.out.println("  Found Atan(239)");
                         FinitePi.atan239 = bigDecimal;
                         check(pi);
                   });
 
-                  final double iterationsAtan5 = (4471l * DECIMAL_PLACES) / 6250;
+                  System.out.println("  >> Atan(1023) starting <<");
+                  ATanWorker atan1023 = new ATanWorker(1023, DECIMAL_PLACES, bigDecimal -> {
+                        System.out.println("  Found Atan(1023)");
+                        FinitePi.atan1023 = bigDecimal;
+                        check(pi);
+                  });
+
+                  System.out.println("  >> Atan(5832) starting <<");
+                  ATanWorker atan5832 = new ATanWorker(5832, DECIMAL_PLACES, bigDecimal -> {
+                        System.out.println("  Found Atan(5832)");
+                        FinitePi.atan5832 = bigDecimal;
+                        check(pi);
+                  });
+
+                  System.out.println("  >> Atan(110443) starting <<");
+                  ATanWorker atan110443 = new ATanWorker(110443, DECIMAL_PLACES, bigDecimal -> {
+                        System.out.println("  Found Atan(110443)");
+                        FinitePi.atan110443 = bigDecimal;
+                        check(pi);
+                  });
+
+                  System.out.println("  >> Atan(4841182) starting <<");
+                  ATanWorker atan4841182 = new ATanWorker(4841182, DECIMAL_PLACES, bigDecimal -> {
+                        System.out.println("  Found Atan(4841182)");
+                        FinitePi.atan4841182 = bigDecimal;
+                        check(pi);
+                  });
+
+                  System.out.println("  >> Atan(6826318) starting <<");
+                  ATanWorker atan6826318 = new ATanWorker(6826318, DECIMAL_PLACES, bigDecimal -> {
+                        System.out.println("  Found Atan(6826318)");
+                        FinitePi.atan6826318 = bigDecimal;
+                        check(pi);
+                  });
+
                   final double iterationsAtan239 = (657l * DECIMAL_PLACES) / 3125;
 
                   if (!ATanWorker.executor.isShutdown()) {
                         try {
                               ATanWorker.executor.submit((Runnable) () -> {
                                     while (true) {
-                                          if (FinitePi.atan5 != null && FinitePi.atan239 != null) {
+                                          if (FinitePi.atan239 != null) {
                                                 return;
                                           }
 
-                                          int atan5Percent = (int) ((atan5.getCurrentSpot() / iterationsAtan5) * 100);
+                                          // Takes the longest time no matter what, we only care about this.
                                           int atan239Percent = (int) ((atan239.getCurrentSpot() / iterationsAtan239) * 100);
 
-                                          progressBar.setValue(Math.min(100, Math.min(atan239Percent, atan5Percent)));
+                                          progressBar.setValue(Math.min(100, atan239Percent));
 
                                           try {
                                                 Thread.sleep(10l);
@@ -148,13 +183,25 @@ public class FinitePi {
       }
 
       private static void check(JTextArea field) {
-            if (atan5 != null && atan239 != null) {
+            if (atan239 != null && atan1023 != null && atan5832 != null && atan110443 != null && atan4841182 != null && atan6826318 != null) {
                   progressBar.setValue(100);
 
                   System.out.println("Atan values computed (took " + (System.currentTimeMillis() - time) / 1000 + " seconds), computing PI");
 
-                  BigDecimal result = atan5.multiply(FOUR).subtract(atan239).multiply(FOUR);
-                  result = result.setScale(DECIMAL_PLACES, BigDecimal.ROUND_FLOOR);
+                  BigDecimal $183 = new BigDecimal("183");
+                  BigDecimal $32 = new BigDecimal("32");
+                  BigDecimal $68 = new BigDecimal("68");
+                  BigDecimal $12 = new BigDecimal("12");
+                  BigDecimal $100 = new BigDecimal("100");
+
+                  BigDecimal result = $183.multiply(atan239)
+                          .add($32.multiply(atan1023))
+                          .subtract($68.multiply(atan5832))
+                          .add($12.multiply(atan110443))
+                          .subtract($12.multiply(atan4841182))
+                          .subtract($100.multiply(atan6826318));
+
+                  result = result.multiply(FOUR).setScale(DECIMAL_PLACES, BigDecimal.ROUND_FLOOR);
 
                   field.setText(result.toString());
 
