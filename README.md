@@ -3,7 +3,7 @@
 Uses the popular Machin-Like algorithm to great amounts of precision in calculating &pi;.
 The Machin-Like formula proposed by Hwang Chien-Lih from 1997 is currently being used.
 
-![Machin-Like formula](https://upload.wikimedia.org/math/0/6/2/062523cddd6778ddcb608e669abc210f.png)
+![Machin-Like formula](https://upload.wikimedia.org/math/e/7/7/e77b42a2ca776e95ebe5bb46ccbb9893.png)
 
 By implementing a GUI, calculations can be made to relatively large decimal precision values and progress can be monitored during these calculations. 
 
